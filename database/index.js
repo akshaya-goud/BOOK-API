@@ -30,7 +30,7 @@ const authors = [
     {
         id: 2,
         name: "akshaya",
-        books: ["12345ONE"],
+        books: [],
     },
 ];
 

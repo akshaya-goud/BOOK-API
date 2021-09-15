@@ -78,5 +78,19 @@ shapeAI.put("/book/author/update/:isbn",(req,res) => {
                       message:"New Author was added" });
  });    
  ///
-
+ shapeAI.put("/publication/update/book/:isbn",(req,res) => {
+    database.publications.forEach((publication) => {
+        if(publication.id === req.body.pubId) {
+            return publication.books.push(req.params.isbn);
+        }
+    });
+    database.books.forEach((book) => {
+        if (book.ISBN === req.params.isbn){
+            book.publication = req.body.pubId;
+            return;
+        }
+ });
+ return res.json({ books: database.books, publications: database.publication,
+    message:"successfully updated publication" });
+});
 shapeAI.listen(3000, () => console.log("server running!!!!"));
