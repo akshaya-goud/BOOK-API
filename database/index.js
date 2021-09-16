@@ -2,7 +2,7 @@ let books = [
     {
     ISBN: "12345ONE",
     title: "Getting started with MERN",
-    authors: [1, 2, 3],
+    authors: [1, 2],
     languages: "en", 
     pubDate: "2021 -07-07",
     numOfPage: 225,
@@ -42,7 +42,7 @@ const publications = [
     },
     {
         id: 2,
-        name: "Vickie Publications",
+        name: "Vicky",
         books: ["12345Two"],
     },
 ];

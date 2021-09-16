@@ -93,4 +93,63 @@ shapeAI.put("/book/author/update/:isbn",(req,res) => {
  return res.json({ books: database.books, publications: database.publication,
     message:"successfully updated publication" });
 });
+///
+shapeAI.delete("/book/delete/:isbn",(req,res) => {
+    const updateBookDatabase = database.books.filter(
+        (book) => book.ISNB !== req.params.isbn);
+    database.books = updateBookDatabase; 
+    return res.json({ books: database.books });
+ });    
+ ///
+ shapeAI.delete("/book/delete/author/:isbn/:authorId",(req,res) => {
+   
+    database.books.forEach((book) => {
+      if (book.ISBN === req.params.isbn){
+          const newAuthorList = book.authors.filter(
+              (author) => author !== parseInt(req.params.authorId)
+          );
+      book.authors = newAuthorList;
+      return;
+          }
+        });
+        database.authors.forEach((author)=> {
+            if (author.id === parseInt(req.params.authorId)) {
+                const newBookList = author.books.filter(
+                    (book) => book.ISBN !== req.params.isbn
+                    );
+
+                    author.books = newBookList;
+                    return;
+            }
+        });
+        return res.json({
+            book: database.books,
+            author: database.authors,
+            message:"author was deleted!!!!!",
+        });
+    });  
+///
+shapeAI.delete("/publication/delete/book/:isbn/:pubId",(req,res) => {
+   
+    database.publications.forEach((publication) => {
+      if (publication.id === parseInt(req.params.pubId)){
+          const newBooksList = publication.books.filter(
+              (book) => book !== req.params.isbn
+          );
+      publication.books = newBooksList;
+      return;
+          }
+        });
+        database.books.forEach((book)=> {
+            if (book.ISBN === req.params.isbn) {
+                    book.publication = 0 ;
+                    return;
+            }
+        });
+        return res.json({
+            book: database.books,
+            publications: database.publications,
+            message:"author was deleted!!!!!",
+        });
+    });  
 shapeAI.listen(3000, () => console.log("server running!!!!"));
