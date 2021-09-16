@@ -1,8 +1,23 @@
+require("dotenv").config();
+
 const express = require("express");
+const mongoose = require("mongoose");
 const database = require("./database/index");
 const shapeAI = express();
 ///
 shapeAI.use(express.json());
+/// establish database connection
+mongoose
+.connect(process.env.MONGO_URL,{
+     useNewUrlParser: true,
+     useUnifiedTopology: true,
+    
+    }
+)
+.then(() => console.log("connection established!!!!!!"));
+
+
+///
 shapeAI.get("/", (req,res) => {
     return res.json({ books: database.books });
 });
@@ -153,3 +168,6 @@ shapeAI.delete("/publication/delete/book/:isbn/:pubId",(req,res) => {
         });
     });  
 shapeAI.listen(3000, () => console.log("server running!!!!"));
+///
+
+
