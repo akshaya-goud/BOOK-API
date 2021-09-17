@@ -1,11 +1,23 @@
 require("dotenv").config();
 
+// framework
 const express = require("express");
 const mongoose = require("mongoose");
+
+// database
 const database = require("./database/index");
+
+// models
+const BookModel = require("./database/book");
+const AuthorModel = require("./database/author");
+const PublicationModel = require("./database/publication");
+
+//initializing express
 const shapeAI = express();
+
 ///
 shapeAI.use(express.json());
+
 /// establish database connection
 mongoose
 .connect(process.env.MONGO_URL,{
@@ -21,6 +33,7 @@ mongoose
 shapeAI.get("/", (req,res) => {
     return res.json({ books: database.books });
 });
+
 ///
 shapeAI.get("/is/:isbn", (req,res) => {
     const getSpecificBook = database.books.filter((book) => book.ISBN === req.params.isbn);
@@ -30,6 +43,7 @@ shapeAI.get("/is/:isbn", (req,res) => {
      }
      return res.json({ book: getSpecificBook});
 });
+
 ///
 shapeAI.get("/c/:category", (req,res) => {
     const getSpecificBooks = database.books.filter((book) => book.category.includes(req.params.category));
@@ -39,10 +53,12 @@ shapeAI.get("/c/:category", (req,res) => {
      }
      return res.json({ book: getSpecificBooks});
 });
+
 ///
 shapeAI.get("/author", (req,res) => {
      return res.json({authors: database.authors});
 });
+
 ///
 shapeAI.get("/author/:name", (req,res) => {
     const getSpecificauthors = database.authors.filter((authors) => authors.name.includes(req.params.name));
@@ -52,11 +68,13 @@ shapeAI.get("/author/:name", (req,res) => {
      }
     return res.json({authors: getSpecificauthors});
 });
+
 ///
 shapeAI.get("/publications", (req,res) => {
     
     return res.json({ publications: database.publications });
 });
+
 ///
 shapeAI.post("/book/new",(req,res) => {
    const{ newBook } = req.body;
