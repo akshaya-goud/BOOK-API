@@ -6,8 +6,8 @@ const mongoose = require("mongoose");
 
 //Microservices Routes
 const Books = require("./API/Book");
-const AuthorModel = require("./API/author");
-const PublicationModel = require("./API/publication");
+const Authors = require("./API/author");
+const Publications  = require("./API/publication");
 
 //initializing express
 const shapeAI = express();

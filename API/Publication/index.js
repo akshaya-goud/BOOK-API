@@ -24,10 +24,15 @@ Router.get("/", (req, res) => {
   Parameters      none
   Method          post
   */
-  Router.post("/new", (req, res) => {
-    const { newPublication } = req.body;
-    PublicationModel.create(newPublication);
-    return res.json({ message: "publication was added!" });
+  Router.post("/new",async  (req, res) => {
+      try {
+        const { newPublication } = req.body;
+        await PublicationModel.create(newPublication);
+       return res.json({ message: "publication was added!" }); 
+      }
+    catch (error) {
+        return res.json({ error: error.message });
+    }
   });
   
   
